@@ -179,11 +179,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d950cd3ef3a6040b165180200b964c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lights: {fileID: 0}
+  lights: {fileID: 14966989}
   lightList: []
+  lightsToggle: 1
   effectsToggle: 0
-  effectSelector: 0
-  deltaMult: 0
+  effectSelect: 1
+  speed: 0
+  delayTime: 0.05
 --- !u!1 &14966989
 GameObject:
   m_ObjectHideFlags: 0
