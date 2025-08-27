@@ -12,6 +12,8 @@ public class LightController : MonoBehaviour
     public int effectSelect;
     public float speed;
     public float delayTime;
+
+    public Color defaultColor;
     
     /*
      * Keys:
@@ -26,6 +28,8 @@ public class LightController : MonoBehaviour
     {
         lightList.AddRange(lights.GetComponentsInChildren<Light>());
         
+        Debug.Log(lightList[17].ToString().Contains("Spot Light"));
+        
     }
 
     // Update is called once per frame
@@ -39,16 +43,24 @@ public class LightController : MonoBehaviour
             effectsToggle = !effectsToggle;
             
             if (effectsToggle)
-                StartCoroutine(ICoroutine());
-
+                StartCoroutine(Coroutine());
             else
             {
-                StopCoroutine(ICoroutine());
+                StopCoroutine(Coroutine());
                 ResetLights();
                 
             }
             
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            effectSelect = 1;
+        
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            effectSelect = 2;
+        
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            effectSelect = 3;
 
     }
     
@@ -70,15 +82,16 @@ public class LightController : MonoBehaviour
     {
         lightsToggle = true;
         
-        foreach (var lightInst in lightList)
+        foreach (var light in lightList)
         {
-            lightInst.intensity = 2;
+            light.intensity = 2;
+            light.color = defaultColor;
 
         }
         
     }
 
-    IEnumerator ICoroutine()
+    IEnumerator Coroutine()
     {
         while (effectsToggle)
         {
@@ -91,12 +104,29 @@ public class LightController : MonoBehaviour
                     break;
                 
                 case 2:
-                    
+                    foreach (var light in lightList)
+                    {
+                        light.intensity = 2;
+                        light.color = Color.white;
+                        light.range = 4;
+
+                        yield return new WaitForSeconds(delayTime);
+
+                    }
 
                     break;
                 
                 case 3:
-                    
+                    // pairs well with caramelldansen
+                    foreach (var light in lightList)
+                    {
+                        Color randColor = Random.ColorHSV();
+                        
+                        light.color = randColor;
+                        
+                    }
+
+                    yield return new WaitForSeconds(delayTime);
 
                     break;
                 
@@ -109,5 +139,24 @@ public class LightController : MonoBehaviour
         yield return null;
 
     }
-    
+
 }
+
+/*Light[] flickers;
+                    
+if (lightList[lightElement].ToString().Contains("Spot Light"))
+    flickers = lightList[lightElement].transform.parent.GetComponentsInChildren<Light>();
+else
+    flickers = lightList[lightElement].GetComponentsInChildren<Light>();
+
+for (var i = 0; i < 6; i++)
+{
+    foreach (var flicker in flickers)
+    {
+        flicker.intensity = (i % 2 == 0 ? 1 : 2);
+
+    }
+                        
+    yield return new WaitForSeconds(delayTime);
+                        
+}*/

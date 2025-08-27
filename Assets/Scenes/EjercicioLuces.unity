@@ -186,6 +186,7 @@ MonoBehaviour:
   effectSelect: 1
   speed: 0
   delayTime: 0.05
+  defaultColor: {r: 1, g: 0.89411765, b: 0.6745098, a: 0}
 --- !u!1 &14966989
 GameObject:
   m_ObjectHideFlags: 0
