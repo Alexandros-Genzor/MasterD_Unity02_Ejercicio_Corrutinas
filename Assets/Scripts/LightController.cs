@@ -1,23 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LightController : MonoBehaviour
 {
-    public GameObject lights;
-    public List<Light> lightList;
-    public bool lightsToggle = true;
-    public bool effectsToggle;
-    public int effectSelect;
+    public GameObject lightContainer;
+    public List<Light> lightsList;
+    public int effectNumber;
     public float speed;
     public float delayTime;
+    
+    public bool lightsToggle = true;
+    public bool effectsToggle;
+    
+    private List<LightDefaults> _lightsDefaultsList; 
 
-    public Color defaultColor;
+    // [Header("-- DEFAULTS --")]
+    // [SerializeField] private Color defaultColor;
+    // [SerializeField] private float defaultIntensity;
+    // [SerializeField] private float defaultRange;
     
     /*
      * Keys:
-     *  - Q: Toggles lights on / off.
+     *  - Q: Toggles lights On / Off.
      *  - W: Controls lights coroutine.
      *  - 1, 2, 3: Sets the lights behaviours.
      */
@@ -26,9 +32,17 @@ public class LightController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lightList.AddRange(lights.GetComponentsInChildren<Light>());
+        _lightsDefaultsList = new List<LightDefaults>();
         
-        Debug.Log(lightList[17].ToString().Contains("Spot Light"));
+        lightsList.AddRange(lightContainer.GetComponentsInChildren<Light>());
+
+        foreach (Light lightInst in lightsList)
+        {
+            _lightsDefaultsList.Add(new LightDefaults(lightInst));
+            
+        }
+        
+        Debug.Log(lightsList[17].ToString().Contains("Spot Light"));
         
     }
 
@@ -54,13 +68,13 @@ public class LightController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            effectSelect = 1;
+            effectNumber = 1;
         
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            effectSelect = 2;
+            effectNumber = 2;
         
         if (Input.GetKeyDown(KeyCode.Alpha3))
-            effectSelect = 3;
+            effectNumber = 3;
 
     }
     
@@ -70,10 +84,16 @@ public class LightController : MonoBehaviour
     {
          lightsToggle = !lightsToggle;
 
-         foreach (var lightInst in lightList)
+         /*foreach (var lightInst in lightsList)
          {
-             lightInst.intensity = (lightsToggle ? 2 : 0);
+             lightInst.intensity = (lightsToggle ? defaultIntensity : 0);
 
+         }*/
+
+         for (int i = 0; i < lightsList.Count; i++)
+         {
+             lightsList[i].intensity = (lightsToggle ? _lightsDefaultsList[i].Intensity : 0);
+             
          }
         
     }
@@ -82,10 +102,19 @@ public class LightController : MonoBehaviour
     {
         lightsToggle = true;
         
-        foreach (var light in lightList)
+        /*foreach (var lightInst in lightsList)
         {
-            light.intensity = 2;
-            light.color = defaultColor;
+            lightInst.intensity = defaultIntensity;
+            lightInst.color = defaultColor;
+            lightInst.range = defaultRange;
+
+        }*/
+
+        for (int i = 0; i < lightsList.Count; i++)
+        {
+            lightsList[i].intensity = _lightsDefaultsList[i].Intensity;
+            lightsList[i].range = _lightsDefaultsList[i].Range;
+            lightsList[i].color = _lightsDefaultsList[i].Colour;
 
         }
         
@@ -95,7 +124,7 @@ public class LightController : MonoBehaviour
     {
         while (effectsToggle)
         {
-            switch (effectSelect)
+            switch (effectNumber)
             {
                 case 1:
                     ToggleLights();
@@ -104,29 +133,49 @@ public class LightController : MonoBehaviour
                     break;
                 
                 case 2:
-                    foreach (var light in lightList)
+                    /*foreach (var light in lightsList)
                     {
-                        light.intensity = 2;
+                        light.intensity = 1;
                         light.color = Color.white;
                         light.range = 4;
 
                         yield return new WaitForSeconds(delayTime);
 
+                        if (!effectsToggle)
+                            break;
+
+                    }*/
+
+                    /*foreach (var lightInst in lightsList)
+                    {
+                        lightInst.intensity = defaultIntensity * Mathf.Abs(Mathf.Sin(Time.time / speed));
+
+                    }*/
+
+                    for (int i = 0; i < lightsList.Count; i++)
+                    {
+                        lightsList[i].intensity = _lightsDefaultsList[i].Intensity * 
+                                                  Mathf.Abs(Mathf.Sin(Time.time / speed));
+                        
                     }
 
                     break;
                 
                 case 3:
-                    // pairs well with caramelldansen
-                    foreach (var light in lightList)
+                    // better with longer delayTime
+                    foreach (var lightInst in lightsList)
                     {
-                        Color randColor = Random.ColorHSV();
-                        
-                        light.color = randColor;
+                        lightInst.color = Random.ColorHSV(0, 1, 1, 1, 1, 1, 1, 1);
                         
                     }
 
                     yield return new WaitForSeconds(delayTime);
+
+                    break;
+                
+                default:
+                    Debug.Log("No effect selected.");
+                    effectsToggle = false;
 
                     break;
                 

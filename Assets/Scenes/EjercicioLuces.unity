@@ -131,7 +131,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4238119}
-  - component: {fileID: 4238118}
   - component: {fileID: 4238120}
   m_Layer: 0
   m_Name: LightManager
@@ -140,18 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &4238118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4238117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e068f9cd162ea0a4c87259dec3be2aeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &4238119
 Transform:
   m_ObjectHideFlags: 0
@@ -179,14 +166,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d950cd3ef3a6040b165180200b964c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lights: {fileID: 14966989}
-  lightList: []
+  lightContainer: {fileID: 14966989}
+  lightsList: []
+  effectNumber: 0
+  speed: 2
+  delayTime: 0.05
   lightsToggle: 1
   effectsToggle: 0
-  effectSelect: 1
-  speed: 0
-  delayTime: 0.05
   defaultColor: {r: 1, g: 0.89411765, b: 0.6745098, a: 0}
+  defaultIntensity: 2
+  defaultRange: 5
 --- !u!1 &14966989
 GameObject:
   m_ObjectHideFlags: 0
@@ -3007,7 +2996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 466186, guid: 0dd137872bec6e04aaaaa2b3e9f3c5a7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.704
+      value: -1.703
       objectReference: {fileID: 0}
     - target: {fileID: 466186, guid: 0dd137872bec6e04aaaaa2b3e9f3c5a7, type: 3}
       propertyPath: m_LocalPosition.z
