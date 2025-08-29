@@ -173,7 +173,7 @@ MonoBehaviour:
   delayTime: 0.1
   lightsToggle: 1
   effectsToggle: 0
-  toggleSmooth: 0
+  toggleStepped: 0
 --- !u!1 &14966989
 GameObject:
   m_ObjectHideFlags: 0
