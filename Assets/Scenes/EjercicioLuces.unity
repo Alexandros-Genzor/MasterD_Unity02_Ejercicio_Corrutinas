@@ -170,12 +170,10 @@ MonoBehaviour:
   lightsList: []
   effectNumber: 0
   speed: 2
-  delayTime: 0.05
+  delayTime: 0.1
   lightsToggle: 1
   effectsToggle: 0
-  defaultColor: {r: 1, g: 0.89411765, b: 0.6745098, a: 0}
-  defaultIntensity: 2
-  defaultRange: 5
+  toggleSmooth: 0
 --- !u!1 &14966989
 GameObject:
   m_ObjectHideFlags: 0

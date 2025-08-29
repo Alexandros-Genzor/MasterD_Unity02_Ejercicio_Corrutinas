@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public struct LightDefaults
 {
+    [Obsolete]
     public Color Colour { get; private set; }
     public float Intensity { get; private set; }
     public float Range { get; private set; }
